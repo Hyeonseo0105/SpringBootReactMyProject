@@ -34,4 +34,5 @@ public interface travelDAO extends JpaRepository<Gntravel, Integer>{
 	@Query(value = "SELECT CEIL(COUNT(*)/12.0) FROM gntravel "
 			+"WHERE (title LIKE CONCAT('%',:search,'%') OR manage LIKE CONCAT('%',:search,'%'))",nativeQuery = true)
 	public int travelFindTotalPage(@Param("search") String search);
+	
 }
