@@ -14,24 +14,25 @@ public interface travelDAO extends JpaRepository<Gntravel, Integer>{
 	
 	//홈
 	@Query(value = "SELECT * FROM gntravel WHERE type=2 "
-			+"ORDER BY no DESC LIMIT :start,3",nativeQuery = true)
-	public List<Gntravel> travelHomeData(@Param("start") Integer start);
+			+"ORDER BY no DESC LIMIT 0,3",nativeQuery = true)
+	public List<Gntravel> travelHomeData();
+	
 	@Query(value = "SELECT * FROM gntravel "
 			+ "WHERE title LIKE '%산청%' "
 			+ "LIMIT 0,2",nativeQuery = true)
 	public List<Gntravel> travelHome();
 	
-	@Query(value = "SELECT CEIL(COUNT(*)/12.0) FROM gntravel",nativeQuery = true)
+	@Query(value = "SELECT COUNT(*) FROM gntravel",nativeQuery = true)
 	public int travelTotalPage();
 	
 	public Gntravel findByNo(int no);
 	
 	@Query(value = "SELECT * FROM gntravel "
-			+"WHERE (title LIKE CONCAT('%',:search,'%') OR manage LIKE CONCAT('%',:search,'%')) "
+			+"WHERE manage LIKE CONCAT('%',:address,'%') "
 			+"ORDER BY no ASC limit :start,12",nativeQuery = true)
-	public List<Gntravel> travelFindData(@Param("start") Integer start,@Param("search") String search);
+	public List<Gntravel> travelFindData(@Param("start") Integer start,@Param("address") String address);
 	
-	@Query(value = "SELECT CEIL(COUNT(*)/12.0) FROM gntravel "
-			+"WHERE (title LIKE CONCAT('%',:search,'%') OR manage LIKE CONCAT('%',:search,'%'))",nativeQuery = true)
-	public int travelFindTotalPage(@Param("search") String search);
+	@Query(value = "SELECT COUNT(*) FROM gntravel "
+			+"WHERE manage LIKE CONCAT('%',:address,'%')",nativeQuery = true)
+	public int travelFindTotalPage(@Param("address") String address);
 }
